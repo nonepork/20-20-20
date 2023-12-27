@@ -79,11 +79,11 @@ if __name__ == "__main__":
         win32gui.SetWindowPos(pygame.display.get_wm_info()['window'], win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 
         main(20, BIG_FONT)
-        
+
         # records when 20 min ups
         now = datetime.now()
 
         current_time = now.strftime("%H:%M:%S")
         print("Current Time =", current_time)
-        
+
         time.sleep(1200)
