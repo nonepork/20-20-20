@@ -1,0 +1,7 @@
+pywin32
+pygame
+pystray
+pillow
+datetime
+threading
+windows_toasts
