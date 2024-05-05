@@ -1,23 +1,28 @@
 import win32gui
 import win32con
 import pygame
-import time
+import pystray
 import sys
 import os
+from PIL import Image
 from datetime import datetime
-from VividHues import Clr
+from threading import Event, Thread
+from base64 import b64decode
 
 pygame.font.init()
 pygame.mixer.init()
 
-projectFolder = os.path.dirname(os.path.abspath(sys.argv[0]))
-resourcesFolder = os.path.join(projectFolder, 'Resources')
+COUNTDOWN_TIMER = 1200 # seconds
 
 SMALL_FONT = pygame.font.SysFont('comicsans', 100)
 BIG_FONT = pygame.font.SysFont('comicsans', 250)
 LIGHT_GRAY = (200, 200, 200)
 DARK_GRAY = (30, 30, 30)
-first_time = True
+exit_event = Event()
+last_rest = ""
+first_run = True
+
+stray_image = Image.open("kot.png")
 
 def draw(timer, timerPos):
     WIN.fill(DARK_GRAY)
@@ -25,7 +30,8 @@ def draw(timer, timerPos):
     pygame.display.update()
 
 
-def main(timerValue, font):
+def drawTimer(timerValue, font):
+    global running
     clock = pygame.time.Clock()
 
     timer = font.render(str(timerValue), True, LIGHT_GRAY)
@@ -63,18 +69,18 @@ def main(timerValue, font):
     return False
 
 
-if __name__ == "__main__":
-    os.system('cls')
-    print(Clr.BOLD + Clr.random("スタート~") + Clr.RS)
-    while True:
-        if not first_time:
+def main():
+    global first_run, last_rest, HALF_WIDTH, HALF_HEIGHT, WIN
+
+    while not exit_event.is_set():
+        if not first_run:
             WIN = pygame.display.set_mode((150, 150), pygame.NOFRAME)
             HALF_WIDTH, HALF_HEIGHT = 75, 75
 
             win32gui.SetWindowPos(pygame.display.get_wm_info()['window'], win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 
-            if not main(10, SMALL_FONT):
-                time.sleep(1200)
+            if not drawTimer(10, SMALL_FONT):
+                exit_event.wait(COUNTDOWN_TIMER)
                 continue
 
             WIN = pygame.display.set_mode((0, 0))
@@ -83,13 +89,31 @@ if __name__ == "__main__":
 
             win32gui.SetWindowPos(pygame.display.get_wm_info()['window'], win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 
-            main(20, BIG_FONT)
+            drawTimer(20, BIG_FONT)
         else:
-            first_time = False
+            first_run = False
 
         # Record current time when times up
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print("Current Time =", Clr.jazzy(current_time) + Clr.RS)
+        last_rest = current_time
 
-        time.sleep(1200)
+        exit_event.wait(COUNTDOWN_TIMER)
+
+
+def exit(icon, item):
+    global running
+    exit_event.set()
+    icon.stop()
+    running = False
+    sys.exit()
+
+icon = pystray.Icon("eyerest", stray_image, "eyerest", menu=pystray.Menu(
+    pystray.MenuItem("Last rest", lambda icon, item: icon.notify("Last rest: " + last_rest)),
+    pystray.MenuItem("Exit", exit)
+))
+
+if __name__ == "__main__":
+    Thread(target=main).start()
+
+    icon.run()
