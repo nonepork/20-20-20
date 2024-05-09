@@ -52,9 +52,9 @@ def drawTimer(timerValue, font):
         clock.tick(1)
 
         for event in pygame.event.get():
-            if (
-                event.type == pygame.QUIT
-            ):  # if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            # if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            #     running = False
+            if event.type == pygame.QUIT:
                 pass
 
         timerValue -= 1
@@ -125,8 +125,8 @@ def main():
 def exit(icon, item):
     global running
     exit_event.set()
-    icon.stop()
     running = False
+    icon.stop()
     sys.exit()
 
 
@@ -151,3 +151,4 @@ if __name__ == "__main__":
     Thread(target=main).start()
 
     icon.run()
+
