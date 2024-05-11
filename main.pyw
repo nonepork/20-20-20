@@ -114,7 +114,6 @@ def main():
         else:
             first_run = False
 
-        # Record current time when times up
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         last_rest = current_time
