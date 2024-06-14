@@ -7,11 +7,11 @@ import sys
 import io
 from PIL import Image
 from datetime import datetime
+from dateutil.parser import parse
 from threading import Event, Thread
 from windows_toasts import Toast, InteractableWindowsToaster
 
 # TODO:
-# Make pause resume where it's lefted
 # Change pystray's menuitem name when paused
 # Gaming feature where drawing on screen got replaced as notification toaster
 
@@ -140,7 +140,7 @@ def pause_countdown(icon, item):
         exit_event.set()
         running = False
         paused = True
-        last_rest_parsed = datetime.strptime(last_rest, '%H:%M:%S')
+        last_rest_parsed = parse(last_rest)
         time_difference = datetime.now() - last_rest_parsed
         paused_seconds = time_difference.total_seconds()
         print(paused_seconds)
