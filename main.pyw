@@ -15,6 +15,10 @@ from windows_toasts import Toast, InteractableWindowsToaster
 # Change pystray's menuitem name when paused
 # Gaming feature where drawing on screen got replaced as notification toaster
 
+# BUG:
+# pause broken after once lol
+# first_run broken after pause
+
 pygame.font.init()
 pygame.mixer.init()
 
