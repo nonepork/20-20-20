@@ -126,7 +126,6 @@ def main():
 
         if paused:
             paused = False
-            print(paused_seconds)
             exit_event.wait(paused_seconds)
         else:
             exit_event.wait(COUNTDOWN_TIMER)
