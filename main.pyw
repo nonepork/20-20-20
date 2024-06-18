@@ -165,9 +165,12 @@ icon = pystray.Icon(
     stray_image,
     "eyerest",
     menu=pystray.Menu(
-        pystray.MenuItem("Pause", pause_countdown),
+        pystray.MenuItem("Pause",
+                         pause_countdown,
+                         checked=lambda item: paused),
         pystray.MenuItem(
-            "Last rest", lambda icon, item: icon.notify("Last rest: " + last_rest)
+            "Last rest",
+            lambda icon, item: icon.notify("Last rest: " + last_rest)
         ),
         pystray.MenuItem("Exit", exit),
     ),
