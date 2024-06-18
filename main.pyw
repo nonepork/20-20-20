@@ -12,7 +12,6 @@ from threading import Event, Thread
 from windows_toasts import Toast, InteractableWindowsToaster
 
 # TODO:
-# Change pystray's menuitem name when paused
 # Gaming feature where drawing on screen got replaced as notification toaster
 
 pygame.font.init()
