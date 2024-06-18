@@ -18,7 +18,7 @@ from windows_toasts import Toast, InteractableWindowsToaster
 pygame.font.init()
 pygame.mixer.init()
 
-COUNTDOWN_TIMER = 80  # seconds
+COUNTDOWN_TIMER = 1200  # seconds
 
 SMALL_FONT = pygame.font.SysFont("comicsans", 100)
 BIG_FONT = pygame.font.SysFont("comicsans", 250)
