@@ -60,9 +60,11 @@ def drawTimer(timerValue, font):
         clock.tick(1)
 
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                #running = False
-                pass
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if gamer:
+                    running = False
+                else:
+                    pass
 
         timerValue -= 1
         timer = font.render(str(timerValue), True, LIGHT_GRAY)
@@ -86,44 +88,38 @@ def main():
 
     while not exit_event.is_set():
         if not first_run:
-            if not gamer:
-                WIN = pygame.display.set_mode((150, 150), pygame.NOFRAME)
-                HALF_WIDTH, HALF_HEIGHT = 75, 75
+            WIN = pygame.display.set_mode((150, 150), pygame.NOFRAME)
+            HALF_WIDTH, HALF_HEIGHT = 75, 75
 
-                win32gui.SetWindowPos(
-                    pygame.display.get_wm_info()["window"],
-                    win32con.HWND_TOPMOST,
-                    0,
-                    0,
-                    0,
-                    0,
-                    win32con.SWP_NOMOVE | win32con.SWP_NOSIZE,
-                )
+            win32gui.SetWindowPos(
+                pygame.display.get_wm_info()["window"],
+                win32con.HWND_TOPMOST,
+                0,
+                0,
+                0,
+                0,
+                win32con.SWP_NOMOVE | win32con.SWP_NOSIZE,
+            )
 
-                if not drawTimer(10, SMALL_FONT):
-                    exit_event.wait(COUNTDOWN_TIMER)
-                    continue
+            if not drawTimer(10, SMALL_FONT):
+                exit_event.wait(COUNTDOWN_TIMER)
+                continue
 
-                WIN = pygame.display.set_mode((0, 0))
-                WIDTH, HEIGHT = WIN.get_size()
-                HALF_WIDTH, HALF_HEIGHT = WIDTH / 2, HEIGHT / 2
+            WIN = pygame.display.set_mode((0, 0))
+            WIDTH, HEIGHT = WIN.get_size()
+            HALF_WIDTH, HALF_HEIGHT = WIDTH / 2, HEIGHT / 2
 
-                win32gui.SetWindowPos(
-                    pygame.display.get_wm_info()["window"],
-                    win32con.HWND_TOPMOST,
-                    0,
-                    0,
-                    0,
-                    0,
-                    win32con.SWP_NOMOVE | win32con.SWP_NOSIZE,
-                )
+            win32gui.SetWindowPos(
+                pygame.display.get_wm_info()["window"],
+                win32con.HWND_TOPMOST,
+                0,
+                0,
+                0,
+                0,
+                win32con.SWP_NOMOVE | win32con.SWP_NOSIZE,
+            )
 
-                drawTimer(20, BIG_FONT)
-            else:
-                toaster = InteractableWindowsToaster(" - your eyerest xoxo")
-                newToast = Toast()
-                newToast.text_fields = ["You should rest your eyes, NOW!"]
-                toaster.show_toast(newToast)
+            drawTimer(20, BIG_FONT)
         else:
             first_run = False
 

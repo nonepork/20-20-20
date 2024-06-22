@@ -1,7 +1,6 @@
-pywin32
+Pillow
 pygame
 pystray
-pillow
-datetime
-threading
-windows_toasts
+python_dateutil
+pywin32
+Windows_Toasts
