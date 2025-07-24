@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> deprecated, use https://github.com/nonepork/twentyx3
+
+---
+
 # 20-20-20
 
 Modify for my own use, original by ZXTube
